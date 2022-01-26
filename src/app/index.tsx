@@ -13,11 +13,26 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { GlobalStyle } from '../styles/global-styles';
 
 import { HomePage } from './pages/HomePage/Loadable';
+import { UsersPage } from './pages/UsersPage';
+//
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
+//
+import { useSelector, useDispatch } from 'react-redux';
+import { useAppFeaturesSlice } from './AppFeatures';
+import { selectUserData } from './AppFeatures/selectors';
 
 export function App() {
   const { i18n } = useTranslation();
+  const { actions } = useAppFeaturesSlice();
+
+  const userData = useSelector(selectUserData);
+
+  const useEffectOnMount = (effect: React.EffectCallback) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    React.useEffect(effect, []);
+  };
+
   return (
     <BrowserRouter>
       <Helmet
@@ -30,6 +45,11 @@ export function App() {
 
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
+        <Route
+          exact
+          path={process.env.PUBLIC_URL + '/users'}
+          component={UsersPage}
+        />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
