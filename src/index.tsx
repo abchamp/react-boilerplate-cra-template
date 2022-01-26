@@ -15,6 +15,7 @@ import FontFaceObserver from 'fontfaceobserver';
 
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { App } from 'app';
 
