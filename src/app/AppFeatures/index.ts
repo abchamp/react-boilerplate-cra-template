@@ -1,4 +1,4 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+// import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { AppFeaturesState } from './types';
@@ -18,9 +18,9 @@ const slice = createSlice({
       state.mainLoading = true;
       state.userData = {}
     },
-    userDataLoaded(state, action: PayloadAction) {
-      state.mainLoading = true;
-      state.userData = action
+    userDataLoaded(state, action) {
+      state.mainLoading = false;
+      state.userData = action.payload
     }
   },
 });

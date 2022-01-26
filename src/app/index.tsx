@@ -14,6 +14,7 @@ import { GlobalStyle } from '../styles/global-styles';
 
 import { HomePage } from './pages/HomePage/Loadable';
 import { UsersPage } from './pages/UsersPage';
+import { LoginPage } from './pages/LoginPage';
 //
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
@@ -49,6 +50,11 @@ export function App() {
           exact
           path={process.env.PUBLIC_URL + '/users'}
           component={UsersPage}
+        />
+        <Route
+          exact
+          path={process.env.PUBLIC_URL + '/signin'}
+          component={LoginPage}
         />
         <Route component={NotFoundPage} />
       </Switch>
