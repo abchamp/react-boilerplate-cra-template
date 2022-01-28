@@ -6,7 +6,11 @@ import { AppFeaturesSaga } from './saga';
 
 export const initialState: AppFeaturesState = {
   mainLoading: false,
-  userData: {}
+  mobileMenuOpen: false,
+  isMobileMenu: false,
+  isAuth: false,
+  authGroup: '',
+  error: false,
 };
 
 const slice = createSlice({
@@ -14,13 +18,28 @@ const slice = createSlice({
   initialState,
   reducers: {
     // for change state
-    loadUserData(state) {
+    loadUserData(state, action) {
       state.mainLoading = true;
-      state.userData = {}
+      state.error = false;
+      state.isAuth = false;
     },
     userDataLoaded(state, action) {
       state.mainLoading = false;
-      state.userData = action.payload
+      state.error = false;
+      state.isAuth = true;    
+      state.authGroup = action.payload.gp;
+    },
+    setLoggout(state) {
+      state.isAuth = false;
+      state.authGroup = '';
+    },
+    loadedError(state) {
+      state.mainLoading = false;
+      state.error = true;
+      state.isAuth = false;
+    },
+    setIsMobileMenu(state, action) {
+      state.isMobileMenu = action.payload <= 767;
     }
   },
 });

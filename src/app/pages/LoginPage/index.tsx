@@ -1,28 +1,40 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { useForm, Controller } from 'react-hook-form';
 import { Input } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import {useAppFeaturesSlice } from 'app/AppFeatures';
-import { selectUserData } from 'app/AppFeatures/selectors';
+import { useAppFeaturesSlice } from 'app/appFeatures';
+import { selectIsAuthData } from 'app/appFeatures/selectors';
+import { Typography, Space } from 'antd';
 
 export function LoginPage() {
   const dispatch = useDispatch();
   const { actions } = useAppFeaturesSlice();
+  const isAuth = useSelector(selectIsAuthData);
+  //
+  const { Text, Link } = Typography;
 
-  const { control, handleSubmit } = useForm({
+  useEffect(() => {
+    if (isAuth !== false) {
+      console.log('redirect to dashboard', isAuth);
+    }
+  }, [isAuth]);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       username: '',
       password: '',
     },
   });
 
-  const onSubmit = data => {
-    dispatch(actions.loadUserData());
-  }
- 
- 
+  const onSubmit = formData => {
+    dispatch(actions.loadUserData(formData));
+  };
 
   return (
     <>
@@ -30,23 +42,34 @@ export function LoginPage() {
         <title>Login</title>
         <meta name="description" content="" />
       </Helmet>
-      <PageWrapper>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="username"
-            control={control}
-            render={({ field }) => <Input placeholder="userame" {...field} />}
-          />
 
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => <Input.Password placeholder="password"  {...field} />}
-          />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="username"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field }) => <Input placeholder="userame" {...field} />}
+        />
 
-          <input type="submit" />
-        </form>
-      </PageWrapper>
+        {errors.username && <Text type="danger">Username is required.</Text>}
+
+        <Controller
+          name="password"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field }) => (
+            <Input.Password placeholder="password" {...field} />
+          )}
+        />
+
+        {errors.password && <Text type="danger">Password is required.</Text>}
+
+        <input type="submit" />
+      </form>
     </>
   );
 }

@@ -1,7 +1,11 @@
 /* --- STATE --- */
 export interface AppFeaturesState {
   mainLoading: boolean;
-  userData: {};
+  mobileMenuOpen: boolean,
+  isMobileMenu: boolean,
+  isAuth: boolean,
+  authGroup: string,
+  error: boolean;
 }
 
 // export enum RepoErrorType {

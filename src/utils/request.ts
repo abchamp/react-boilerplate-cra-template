@@ -1,3 +1,11 @@
+import { getLocalSetting, SettingKey } from "./localStorage";
+
+export enum RequestMethodKey {
+  get = 'GET',
+  put = 'PUT',
+  post = 'POST',
+  delete = 'DELETE'
+}
 export class ResponseError extends Error {
   public response: Response;
 
@@ -6,6 +14,7 @@ export class ResponseError extends Error {
     this.response = response;
   }
 }
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -48,7 +57,31 @@ export async function request(
   url: string,
   options?: RequestInit,
 ): Promise<{} | { err: ResponseError }> {
-  const fetchResponse = await fetch(url, options);
+  let _url = `${process.env.REACT_APP_API_URI}${url}`;
+  const fetchResponse = await fetch(_url, options);
+  const response = checkStatus(fetchResponse);
+  return parseJSON(response);
+}
+
+/**
+ *
+ */
+export async function authJsonRequest(
+  url: string,
+  httpMethod: string,
+  data?: Object,
+): Promise<{} | { err: ResponseError }> {
+  let _url = `${process.env.REACT_APP_API_URI}${url}`;
+  let access_token = getLocalSetting(SettingKey.AccessToken);
+  let options = {
+    method: httpMethod,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${access_token}`,
+    },
+    body: JSON.stringify(data),
+  };
+  const fetchResponse = await fetch(_url, options);
   const response = checkStatus(fetchResponse);
   return parseJSON(response);
 }
