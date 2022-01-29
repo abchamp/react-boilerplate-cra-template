@@ -5,13 +5,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { Input } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAppFeaturesSlice } from 'app/appFeatures';
-import { selectIsAuthData } from 'app/appFeatures/selectors';
+import { selectIsAuth } from 'app/appFeatures/selectors';
 import { Typography, Space } from 'antd';
 
 export function LoginPage() {
   const dispatch = useDispatch();
   const { actions } = useAppFeaturesSlice();
-  const isAuth = useSelector(selectIsAuthData);
+  const isAuth = useSelector(selectIsAuth);
   //
   const { Text, Link } = Typography;
 

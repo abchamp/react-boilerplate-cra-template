@@ -3,6 +3,7 @@ export interface AppFeaturesState {
   mainLoading: boolean;
   mobileMenuOpen: boolean,
   isMobileMenu: boolean,
+  drawerTab: number,
   isAuth: boolean,
   authGroup: string,
   error: boolean;

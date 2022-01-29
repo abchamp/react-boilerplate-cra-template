@@ -21,14 +21,14 @@ import { useTranslation } from 'react-i18next';
 //
 import { useSelector, useDispatch } from 'react-redux';
 import { useAppFeaturesSlice } from './appFeatures';
-import { selectIsAuthData } from './appFeatures/selectors';
+import { selectIsAuth } from './appFeatures/selectors';
 import AuthContextProvider from './hook/authContext';
 
 export function App() {
   const { i18n } = useTranslation();
   const { actions } = useAppFeaturesSlice();
 
-  const userData = useSelector(selectIsAuthData);
+  const userData = useSelector(selectIsAuth);
 
   const useEffectOnMount = (effect: React.EffectCallback) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -7,6 +7,7 @@ import { AppFeaturesSaga } from './saga';
 export const initialState: AppFeaturesState = {
   mainLoading: false,
   mobileMenuOpen: false,
+  drawerTab: 0,
   isMobileMenu: false,
   isAuth: false,
   authGroup: '',
@@ -26,7 +27,7 @@ const slice = createSlice({
     userDataLoaded(state, action) {
       state.mainLoading = false;
       state.error = false;
-      state.isAuth = true;    
+      state.isAuth = true;
       state.authGroup = action.payload.gp;
     },
     setLoggout(state) {
@@ -40,7 +41,18 @@ const slice = createSlice({
     },
     setIsMobileMenu(state, action) {
       state.isMobileMenu = action.payload <= 767;
-    }
+    },
+    toggleMobileMenuOpen(state) {
+      if(state.isMobileMenu) {
+        if (!state.mobileMenuOpen) {
+          state.mobileMenuOpen = true;
+        } else {
+          state.mobileMenuOpen = false;
+        }
+      } else {
+        state.mobileMenuOpen = false
+      }
+    },
   },
 });
 

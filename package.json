@@ -89,6 +89,7 @@
     }
   },
   "dependencies": {
+    "@react-hook/window-size": "3.0.7",
     "@reduxjs/toolkit": "1.7.1",
     "antd": "4.18.5",
     "fontfaceobserver": "2.1.0",
